@@ -44,13 +44,15 @@ class EcsService(Construct):
                  ):
         super().__init__(scope, id)
 
-        sg = aws_ec2.SecurityGroup(self,
-                                   id = f"{id}-SG",
-                                   security_group_name = f"{id}-SG",
-                                   description = f"{id} outbound only",
-                                   vpc = vpc,
-                                   allow_all_outbound = True)
-        add_tags(sg, tags, project_tag = project_tag)
+        sg = None
+        if vpc != None:
+            sg = aws_ec2.SecurityGroup(self,
+                                    id = f"{id}-SG",
+                                    security_group_name = f"{id}-SG",
+                                    description = f"{id} outbound only",
+                                    vpc = vpc,
+                                    allow_all_outbound = True)
+            add_tags(sg, tags, project_tag = project_tag)
 
         cluster = aws_ecs.Cluster(self,
                                   id = f"{id}-cluster",
@@ -130,6 +132,9 @@ class EcsService(Construct):
                                stream_prefix = id
                            ))
 
+        security_groups = None
+        if sg != None:
+            security_groups = [ sg ]
         service = aws_ecs.FargateService(self,
                                          id = f"{id}-service",
                                          service_name = f"{id}-service",
@@ -137,7 +142,7 @@ class EcsService(Construct):
                                          task_definition = task,
                                          assign_public_ip = False,
                                          desired_count = 1,
-                                         security_groups = [ sg ]
+                                         security_groups = security_groups
                                          )
         add_tags(service, tags, project_tag = project_tag)
 
