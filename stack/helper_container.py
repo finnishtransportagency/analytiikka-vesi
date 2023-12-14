@@ -48,6 +48,7 @@ class EcsService(Construct):
                                    id = f"{id}-SG",
                                    security_group_name = f"{id}-SG",
                                    description = f"{id} outbound only",
+                                   vpc = vpc,
                                    allow_all_outbound = True)
         add_tags(sg, tags, project_tag = project_tag)
 
