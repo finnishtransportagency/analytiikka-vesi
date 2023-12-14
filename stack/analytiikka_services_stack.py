@@ -100,7 +100,7 @@ class AnalytiikkaServicesStack(Stack):
 
         ais_reader = EcsService(self,
                                 id = "ais-websocket-reader",
-                                path = "container/aiw_websocket_reader",
+                                path = "container/ais_websocket_reader",
                                 cpu = 256,
                                 memory_mb= 512,
                                 vpc = vpc,
