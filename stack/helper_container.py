@@ -38,9 +38,9 @@ class EcsService(Construct):
                  cpu: int,
                  memory_mb: int,
                  vpc: aws_ec2.Vpc,
-                 # security_group: aws_ec2.SecurityGroup,
                  project_tag: str,
-                 tags: dict = None
+                 tags: dict = None,
+                 desired_count: int = 1
                  ):
         super().__init__(scope, id)
 
@@ -141,7 +141,7 @@ class EcsService(Construct):
                                          cluster = cluster,
                                          task_definition = task,
                                          assign_public_ip = False,
-                                         desired_count = 1,
+                                         desired_count = desired_count,
                                          security_groups = security_groups
                                          )
         add_tags(service, tags, project_tag = project_tag)
