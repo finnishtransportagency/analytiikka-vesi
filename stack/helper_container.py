@@ -108,6 +108,7 @@ class EcsService(Construct):
 
         task = aws_ecs.TaskDefinition(self,
                                       id = f"{id}-task",
+                                      family = f"{id}-task",
                                       compatibility = aws_ecs.Compatibility.FARGATE,
                                       network_mode = aws_ecs.NetworkMode.AWS_VPC,
                                       execution_role = exec_role,
@@ -130,7 +131,8 @@ class EcsService(Construct):
                            ))
 
         service = aws_ecs.FargateService(self,
-                                         id = id,
+                                         id = f"{id}-service",
+                                         service_name = f"{id}-service",
                                          cluster = cluster,
                                          task_definition = task,
                                          assign_public_ip = False,
