@@ -12,6 +12,7 @@ from constructs import Construct
 from stack.helper_lambda import *
 from stack.helper_glue import *
 from stack.helper_parameter import *
+from stack.helper_container import *
 
 
 
@@ -95,6 +96,23 @@ class AnalytiikkaServicesStack(Stack):
         #
         # HUOM: Lisää tarvittavat tämän jälkeen. Käytä yllä haettuja asioita tarvittaessa (bukettien nimet, roolit, jne)
         #
+
+
+        ais_reader = EcsService(self,
+                                id = "ais-websocket-reader",
+                                path = "container/aiw_websocket_reader",
+                                cpu = 256,
+                                memory_mb= 512,
+                                vpc = vpc,
+                                # security_group = None,
+                                project_tag = "AIS",
+                                tags = None
+                                )
+
+
+
+
+
 
 
         # Esimerkki 1 python lambda
