@@ -53,6 +53,7 @@ class EcsService(Construct):
                                     vpc = vpc,
                                     allow_all_outbound = True)
             add_tags(sg, tags, project_tag = project_tag)
+            add_tags(sg, { "Name": f"{id}-SG" })
 
         cluster = aws_ecs.Cluster(self,
                                   id = f"{id}-cluster",
